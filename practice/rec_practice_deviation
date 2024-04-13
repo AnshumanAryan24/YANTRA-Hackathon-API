@@ -1,0 +1,45 @@
+import numpy as np
+import sounddevice as sd
+from scipy.io.wavfile import write
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import statistics as st
+
+# Constants
+FS: int = 44100
+DURATION: float = 5.00
+N_CHANNELS = 2
+
+sd.default.samplerate = FS
+sd.default.channels = N_CHANNELS
+
+scaler = StandardScaler()
+
+rawData: np.ndarray = sd.rec(int(FS*DURATION))
+myRecArray: np.ndarray = rawData[:, 0]
+myStdArray = scaler.fit(myRecArray.reshape(-1, 1))
+sd.wait()
+print("-------------------------")
+print(myStdArray)
+print("-------------------------")
+
+write("./output.wav", rate=FS, data=rawData)
+
+time_cd = [i for i in range(len(myRecArray))]
+plt.plot(time_cd, myRecArray)
+plt.show(block = False)
+
+n = len(myRecArray)
+for i in range(n//50, n-n//50, n//25):
+    x1 = st.mean(myRecArray[i-n//50:i])
+    x2 = st.mean(myRecArray[i:i+n//50])
+
+    sd1 = st.stdev(myRecArray[i-n//50:i])
+    sd2 = st.stdev(myRecArray[i:i+n//50])
+
+    z = (x1 - x2)/((sd1/(2*n//50)) + (sd2/(2*n//50)))**(1/2)
+
+    if (z < 1.96):  # alpha = 0.05
+        print("repetition at ", time_cd[i])
+
+input()
