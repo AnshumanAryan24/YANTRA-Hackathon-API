@@ -100,7 +100,7 @@ def initDataFile(dataset_path: str = r"../datasets/Dysarthria and Non Dysarthria
                                         n_fft=n_fft, num_mfcc=n_mfcc, hop_length=hop_length, num_segments=n_seg)
             )
         except:
-            MFCC_list.append([])
+            MFCC_list.append("")
     
     dataset["MFCC"] = MFCC_list
 
@@ -110,4 +110,4 @@ def initDataFile(dataset_path: str = r"../datasets/Dysarthria and Non Dysarthria
     dataset.to_csv("../datasets/data_with_MFCC.csv", header=False, index=False)
 
 
-initDataFile(n_fft=64, hop_length=16)
+initDataFile(n_fft=32, hop_length=8)
