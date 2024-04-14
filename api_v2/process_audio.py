@@ -4,10 +4,11 @@ import statistics as st
 import librosa as lbs
 import sounddevice as sd
 import soundfile as sf
-from scipy.io.wavfile import write, read
+# from scipy.io.wavfile import write, read
 import matplotlib.pyplot as plt
+import numpy as np
 
-Z_ALPHA = 1.2816  # ALPHA = 0.10
+Z_ALPHA = 1.2816  # ALPHA = 0.10 <---------------- Control Parameter
 FS: int = 44100
 DURATION: float = 2.00
 N_CHANNELS = 2
@@ -40,18 +41,23 @@ def __getSegments(length: int, dur: int) ->list[int]:
     return fully_covered, indices
 
 def __saveAudio(JSON_path: str, final_matches, file_name: str = "./voice.json"):
-    data = json.dumps(final_matches)
-    json.dump(data, open("./voice.json", "w"))
+    # data = json.dumps(final_matches)
+    json.dump(final_matches, open("./voice.json", "w"))
+
+def __rowAverage(row):
+    return np.average(row)
 
 def process(audio_path: str, JSON_path: str, extend_dataset: bool = False, dataset_path: str = "./modified_dataset.csv"):
     # Logic for finding which parts (time stamps) of the audio file correspond to repetition of words.
     times_match_i: dict["{int}", (int, int)] = {}
 
-    final_matches: list[tuple[2]] = []
+    final_matches: list[tuple[2]] = {}
 
     audio = []
+    # OPTION1:
     audio = lbs.load(audio_path, dtype="float32")[0].tolist()
     
+    # TESTING values:
     # audio = [item[0] for item in [[-3.0517578e-05,  0.0000000e+00],
     # [ 0.0000000e+00,  0.0000000e+00],
     # [ 1.7944336e-02,  1.7944336e-02],
@@ -103,7 +109,12 @@ def process(audio_path: str, JSON_path: str, extend_dataset: bool = False, datas
             # Consider if more than 5% (from both sides) segment lies in this time stamp
             # if ((start-Li*0.05) <= curr1) and (end <= (next1 + Li*0.05)):
             if (start <= curr1) and (end <= next1):
-                final_matches.append((start, end))
+                if (f"{Li}" in final_matches):
+                    temp = final_matches[f"{Li}"]
+                    temp = (temp[0]+1, temp[1], temp[2], temp[3])
+                else:
+                    temp = (1, Z, start, end)
+                final_matches[f"{Li}"] = temp
     
     if (extend_dataset):
         __saveAudio(JSON_path, final_matches)
