@@ -8,7 +8,7 @@ import soundfile as sf
 import matplotlib.pyplot as plt
 import numpy as np
 
-Z_ALPHA = 3  # ALPHA <---------------- Control Parameter
+Z_ALPHA = 2.3263  # ALPHA=0.01 <---------------- Control Parameter
 FS: int = 44100
 DURATION: float = 2.00
 N_CHANNELS = 2
