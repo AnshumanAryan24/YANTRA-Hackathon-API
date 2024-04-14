@@ -2,6 +2,9 @@
 Team Zephyr Algorithm Code
 This repository has the tools and libraries responsible from the proper functioning of our project 'Vach Sahay'. The code in the repository AI/ML part of the project. 
 
+### NOTE:
+Current version v2 ONLY is to be used, earlier logic has been discarded.
+
 ## API v2:
 1. This edition is to be used.
 2. On-the-go detection.
