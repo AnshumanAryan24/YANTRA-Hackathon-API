@@ -102,8 +102,6 @@ def process(audio_path: str, JSON_path: str, extend_dataset: bool = False):
     L: int = D//2**(3)
 
     fc_final, ind_final = __getSegments(L, D)
-    print(len(ind_final))
-    input()
     j = 0
     while (j < len(ind_final) - 1):
         curr1 = ind_final[j]
