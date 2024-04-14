@@ -11,3 +11,9 @@ This repository has the tools and libraries responsible from the proper function
 ## API:
 1. This is the version 1 of the API used. We have moved on to the second version of the same API.
 2. API v1 has a few shortcomings which led us to move ahead with a better approach for optimisation and better features. 
+
+## Format of JSON item:
+Each element of JSON is of the format:
+_(segment_start, segment_end): repetition_score_
+
+Segment Start and End are kept constant, while the score varies and can be used to compare which parts have repetition.
