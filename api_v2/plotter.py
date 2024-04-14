@@ -3,6 +3,7 @@ from process_audio import process, FS, DURATION, N_CHANNELS
 
 import matplotlib.pyplot as plt
 import librosa as lbs
+import statistics as st
 
 MIN_REP_THRESHOLD = 1350
 
@@ -42,7 +43,7 @@ for key in final_match_keys:
     if (min_rep > final_matches[key]):
         min_rep = final_matches[key]
         min_indices = indices
-MIN_REP_THRESHOLD = min_rep*1.5
+MIN_REP_THRESHOLD = min_rep + st.stdev(final_matches.values())*1.2
 
 for key in final_match_keys:
     indices = eval(key)
