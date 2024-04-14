@@ -126,7 +126,7 @@ def main():
     raw_data = sd.rec(int(FS*DURATION))
     sd.wait()
     sf.write("./output.wav", raw_data, FS)
-    final_matches = process("./output.wav", "./voice.json", extend_dataset=True)
+    final_matches = process("./voice.wav", "./output.json", extend_dataset=True)
     print(final_matches)
     
 
