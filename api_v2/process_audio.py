@@ -47,7 +47,7 @@ def __saveAudio(JSON_path: str, final_matches, file_name: str = "./voice.json"):
 def __rowAverage(row):
     return np.average(row)
 
-def process(audio_path: str, JSON_path: str, extend_dataset: bool = False, dataset_path: str = "./modified_dataset.csv"):
+def process(audio_path: str, JSON_path: str, extend_dataset: bool = False):
     # Logic for finding which parts (time stamps) of the audio file correspond to repetition of words.
     times_match_i: dict["{int}", (int, int)] = {}
 
@@ -125,7 +125,7 @@ def main():
     print("Started")
     raw_data = sd.rec(int(FS*DURATION))
     sd.wait()
-    sf.write("./output.wav", raw_data, FS)
+    sf.write("./voice.wav", raw_data, FS)
     final_matches = process("./voice.wav", "./output.json", extend_dataset=True)
     print(final_matches)
     
