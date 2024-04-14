@@ -17,3 +17,8 @@ Each element of JSON is of the format:
 _(segment_start, segment_end): repetition_score_
 
 Segment Start and End are kept constant, while the score varies and can be used to compare which parts have repetition.
+
+### *NOTE:*
+1. segment_start, segment_end are indices of segment in the numpy.array type object of wav file (when assumed, or converted, to be coming from a one channel microphone).
+2. These are NOT TIME STAMPS, but INDEX STAMPS.
+3. *Reason:* We will be processing .wav file as a numpy.array type, so it is convinient to have stamps in the format of indices, otherwise we have to convert every time.
