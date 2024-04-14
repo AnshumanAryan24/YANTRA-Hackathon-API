@@ -40,9 +40,9 @@ def __getSegments(length: int, dur: int) ->list[int]:
     
     return fully_covered, indices
 
-def __saveAudio(JSON_path: str, final_matches, file_name: str = "./voice.json"):
+def __saveAudio(JSON_path: str, final_matches, file_name: str = "./output.json"):
     # data = json.dumps(final_matches)
-    json.dump(final_matches, open("./voice.json", "w"))
+    json.dump(final_matches, open(file_name.json, "w"))
 
 def __rowAverage(row):
     return np.average(row)
